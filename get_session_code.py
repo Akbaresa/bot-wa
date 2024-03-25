@@ -51,10 +51,8 @@ def get_code():
         kode = kode_element.text
         kode_list.append(kode)
     
-    # Mengirim respons JSON
     response = jsonify({'kode' : kode_list})
     
-    # Memulai threading untuk menunggu 30 detik sebelum menutup driver
     threading.Thread(target=wait_and_quit, args=(driver,)).start()
     
     return response, 200

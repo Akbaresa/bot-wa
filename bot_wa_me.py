@@ -19,6 +19,7 @@ def send_whatsapp_message():
     message = data['message']
     opt = webdriver.ChromeOptions()
     opt.add_argument("user-data-dir=C:/Users/Esa/AppData/Local/Google/Chrome/User Data")
+    opt.add_argument("--headless")
     chrome_service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=chrome_service, options=opt)
     link_wa = "https://api.whatsapp.com/send/?phone=%2B{}".format(nomer) + "&text={}".format(message) + "&type=phone_number&app_absent=0""https://api.whatsapp.com/send/?phone=%2B{}".format(nomer) + "&text={}".format(message) + "&type=phone_number&app_absent=0"
