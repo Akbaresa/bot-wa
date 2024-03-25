@@ -24,6 +24,7 @@ def get_code():
     
     opt = webdriver.ChromeOptions()
     opt.add_argument("user-data-dir=C:/Users/Esa/AppData/Local/Google/Chrome/User Data")
+    # opt.add_argument("user-data-dir=/home/username/.config/google-chrome/")
     opt.add_argument("--headless")
     chrome_service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=chrome_service, options=opt)
