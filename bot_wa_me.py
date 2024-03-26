@@ -41,9 +41,7 @@ def send_whatsapp_message():
     driver.implicitly_wait(60)
     time.sleep(2)
     send.click()
-    time.sleep(2)
-    driver.implicitly_wait(60)
-    time.sleep(2)
+    time.sleep(5)
     return jsonify({'message': 'Pesan WhatsApp berhasil dikirim'})
 
 if __name__ == '__main__':

@@ -28,8 +28,11 @@ def logout():
     driver.implicitly_wait(60)
     time.sleep(1)
     out.click()
-    time.sleep(1000)
-    
+    driver.implicitly_wait(60)
+    keluar = driver.find_element(By.XPATH, '//div[text()="Keluar"]')
+    time.sleep(1)
+    keluar.click()
+    time.sleep(1)
     return jsonify({'pesan' : 'berhasil logout'})
 
 if __name__ == '__main__':
