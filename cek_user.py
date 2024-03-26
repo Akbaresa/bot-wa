@@ -40,5 +40,6 @@ def find_profil():
             return profil_english
         except NoSuchElementException:
             return None
+        
 if __name__ == '__main__':
     app.run(debug=True)
