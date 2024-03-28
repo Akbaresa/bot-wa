@@ -10,11 +10,6 @@ import threading
 
 app = Flask(__name__)
 
-opt = webdriver.ChromeOptions()
-opt.add_argument("user-data-dir=C:/Users/Esa/AppData/Local/Google/Chrome/User Data")
-chrome_service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=chrome_service, options=opt)
-
 def wait_and_quit(driver):
     time.sleep(60)
     driver.quit()
@@ -27,7 +22,10 @@ def get_code():
         return jsonify({'error': 'no pesan diperlukan'}), 400
     
     no = data['no']
-    
+    opt = webdriver.ChromeOptions()
+    opt.add_argument("user-data-dir=C:/Users/Esa/AppData/Local/Google/Chrome/User Data")
+    chrome_service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=chrome_service, options=opt)
     driver.get("https://web.whatsapp.com/")
     
     driver.implicitly_wait(60)
@@ -67,11 +65,11 @@ def send_whatsapp_message():
     
     nomer = data['no']
     message = data['message']
-    link_wa = "https://api.whatsapp.com/send/?phone=%2B{}".format(nomer) 
-    + "&text={}".format(message) 
-    + "&type=phone_number&app_absent=0""https://api.whatsapp.com/send/?phone=%2B{}".format(nomer) 
-    + "&text={}".format(message) 
-    + "&type=phone_number&app_absent=0"
+    opt = webdriver.ChromeOptions()
+    opt.add_argument("user-data-dir=C:/Users/Esa/AppData/Local/Google/Chrome/User Data")
+    chrome_service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=chrome_service, options=opt)
+    link_wa = "https://api.whatsapp.com/send/?phone=%2B{}".format(nomer) + "&text={}".format(message) + "&type=phone_number&app_absent=0""https://api.whatsapp.com/send/?phone=%2B{}".format(nomer) + "&text={}".format(message) + "&type=phone_number&app_absent=0"
     driver.get(link_wa)
     driver.implicitly_wait(60)
     link = driver.find_element(By.ID, 'action-button')
@@ -96,9 +94,13 @@ def send_whatsapp_message():
 @app.route('/api/cek', methods=['GET'])
 def cek():
     try:
+        opt = webdriver.ChromeOptions()
+        opt.add_argument("user-data-dir=C:/Users/Esa/AppData/Local/Google/Chrome/User Data")
+        chrome_service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=chrome_service, options=opt)
         driver.get("https://web.whatsapp.com/")
         driver.implicitly_wait(10)
-        profil = find_profil()
+        profil = driver.find_element(By.XPATH, '//div[@aria-label="foto profil"]')
         
         time.sleep(1)
         profil.click()
@@ -112,16 +114,6 @@ def cek():
     driver.quit()
     return jsonify({'user' : user}),200
 
-def find_profil():
-    try:
-        profil = driver.find_element(By.XPATH, '//div[@aria-label="foto profil"]')
-        return profil
-    except NoSuchElementException:
-        try:
-            profil_english = driver.find_element(By.XPATH, '//div[@aria-label="profile picture"]')
-            return profil_english
-        except NoSuchElementException:
-            return None
 
 
 @app.route('/api/logout', methods=['GET'])
